@@ -24,7 +24,7 @@ M.create_win = function(opts)
   end
 
   if opts.set_buf_settings then
-    opts.set_buf_settings(bufh)
+    opts.set_buf_settings(bufh, win)
   end
 end
 

@@ -40,7 +40,7 @@ M.action_picker = function()
 
   win.create_win({
     text = lines,
-    set_buf_settings = function(bufh)
+    set_buf_settings = function(bufh, win_id)
       api.nvim_buf_set_keymap(bufh, "n", "h", "<nop>", {})
       api.nvim_buf_set_keymap(bufh, "n", "l", "<nop>", {})
       win.disable_insert(bufh)
@@ -49,9 +49,7 @@ M.action_picker = function()
       api.nvim_buf_set_keymap(bufh, "n", "<CR>",
         "<cmd>lua require('lspui.code_actions').select_current_action()<CR>", {})
 
-      for i, _ in pairs(lines) do
-        api.nvim_buf_add_highlight(bufh, -1, 'Normal', i-1, 0, -1)
-      end
+      api.nvim_win_set_option(win_id, 'winhl', 'Normal:Normal')
     end,
     height = #lines
   })
