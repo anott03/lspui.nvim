@@ -1,26 +1,18 @@
 local Border = require('plenary.window.border')
 local api = vim.api
 
-local set_hl = function(group, options)
-  local bg = options.bg == nil and '' or 'guibg=' .. options.bg
-  local fg = options.fg == nil and '' or 'guifg=' .. options.fg
-  local gui = options.gui == nil and '' or 'gui=' .. options.gui
-
-  vim.cmd(string.format('hi %s %s %s %s', group, bg, fg, gui))
-end
-
 local M = {}
 
 M.create_win = function(opts)
   local bufh = opts.bufh or api.nvim_create_buf(false, true)
   local win_opts = opts.win_opts or {
-    relative = "cursor",
-    row = 1,
-    col = 0,
-    width = 40,
-    height = 2,
-    style = "minimal",
-    border = "double"
+    relative = opts.relative or "cursor",
+    row = opts.row or 1,
+    col = opts.row or 0,
+    width = opts.width or 40,
+    height = opts.height or 2,
+    style = opts.style or "minimal",
+    border = opts.style or "double"
   }
   local win = api.nvim_open_win(bufh, true, win_opts)
   vim.api.nvim_win_set_buf(win, bufh)
@@ -32,7 +24,7 @@ M.create_win = function(opts)
   end
 
   if opts.set_buf_settings then
-    opts.set_buf_settings(bufh, set_hl)
+    opts.set_buf_settings(bufh)
   end
 end
 
