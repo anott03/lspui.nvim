@@ -54,7 +54,7 @@ M.action_picker = function()
   local _width
   local lines = {}
   for i,x in ipairs(results) do
-    lines[i] = i .. ': ' .. x.title
+    lines[i] = '[' .. i .. '] ' .. x.title
 
     if not _width then
       _width = #lines[i]
@@ -71,13 +71,12 @@ M.action_picker = function()
   win.create_win({
     text = lines,
     set_buf_settings = function(bufh, win_id)
-      api.nvim_buf_set_keymap(bufh, "n", "h", "<nop>", {})
-      api.nvim_buf_set_keymap(bufh, "n", "l", "<nop>", {})
-      win.disable_insert(bufh)
+      api.nvim_buf_set_option(bufh, "modifiable", false)
       api.nvim_buf_set_keymap(bufh, "n", "<esc>", "<cmd>q<CR>", {})
 
       api.nvim_buf_set_keymap(bufh, "n", "<CR>",
         "<cmd>lua require('lspui.code_actions').select_current_action()<CR>", {})
+      api.nvim_feedkeys("l", "n", {})
 
       api.nvim_win_set_option(win_id, 'winhl', 'Normal:LspuiNormal')
       vim.cmd([[set wrap]])

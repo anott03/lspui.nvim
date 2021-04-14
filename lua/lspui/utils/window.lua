@@ -12,18 +12,20 @@ M.create_win = function(opts)
     width = opts.width or 40,
     height = opts.height or 2,
     style = opts.style or "minimal",
-    border = opts.style or "double"
+    -- border = opts.style or "single",
+    border = {
+      {"┏", "LspuiBorder"},
+      {"─", "LspuiBorder"},
+      {"┓", "LspuiBorder"},
+      {"│", "LspuiBorder"},
+      {"┛", "LspuiBorder"},
+      {"─", "LspuiBorder"},
+      {"┗", "LspuiBorder"},
+      {"│", "LspuiBorder"}
+    },
   }
   local win = api.nvim_open_win(bufh, true, win_opts)
   vim.api.nvim_win_set_buf(win, bufh)
-  -- Border:new(bufh, win, {
-    -- relative = "cursor",
-    -- row = 1,
-    -- col = 0,
-    -- width = opts.width,
-    -- height = opts.height,
-    -- anchor = "NW"
-  -- }, {})
 
   vim.api.nvim_win_set_option(win, 'winblend', opts.winblend or 1)
   if opts.text then
@@ -33,22 +35,6 @@ M.create_win = function(opts)
   if opts.set_buf_settings then
     opts.set_buf_settings(bufh, win)
   end
-end
-
-M.disable_insert = function(bufh)
-  -- there must be a better way to do this
-  api.nvim_buf_set_keymap(bufh, "n", "i", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "I", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "v", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "V", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "o", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "O", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "a", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "A", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "d", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "D", "<nop>", {})
-  api.nvim_buf_set_keymap(bufh, "n", "Q", "<nop>", {})
-  api.nvim_buf_set_option(bufh, "readonly", true)
 end
 
 return M

@@ -6,3 +6,4 @@ if !has('nvim')
 endif
 
 highlight default link LspuiNormal Normal
+highlight default LspuiBorder guifg=lightblue
