@@ -16,7 +16,14 @@ M.create_win = function(opts)
   }
   local win = api.nvim_open_win(bufh, true, win_opts)
   vim.api.nvim_win_set_buf(win, bufh)
-  -- local border = Border:new(bufh, win, win_opts, {})
+  -- Border:new(bufh, win, {
+    -- relative = "cursor",
+    -- row = 1,
+    -- col = 0,
+    -- width = opts.width,
+    -- height = opts.height,
+    -- anchor = "NW"
+  -- }, {})
 
   vim.api.nvim_win_set_option(win, 'winblend', opts.winblend or 1)
   if opts.text then
