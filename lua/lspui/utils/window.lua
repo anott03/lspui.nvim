@@ -12,15 +12,14 @@ M.create_win = function(opts)
     width = opts.width or 40,
     height = opts.height or 2,
     style = opts.style or "minimal",
-    -- border = opts.style or "single",
     border = {
-      {"┏", "LspuiBorder"},
+      {"╭", "LspuiBorder"},
       {"─", "LspuiBorder"},
-      {"┓", "LspuiBorder"},
+      {"╮", "LspuiBorder"},
       {"│", "LspuiBorder"},
-      {"┛", "LspuiBorder"},
+      {"╯", "LspuiBorder"},
       {"─", "LspuiBorder"},
-      {"┗", "LspuiBorder"},
+      {"╰", "LspuiBorder"},
       {"│", "LspuiBorder"}
     },
   }
@@ -28,8 +27,13 @@ M.create_win = function(opts)
   vim.api.nvim_win_set_buf(win, bufh)
 
   vim.api.nvim_win_set_option(win, 'winblend', opts.winblend or 1)
+
   if opts.text then
     api.nvim_buf_set_lines(bufh, 0, #opts.text, false, opts.text)
+  end
+
+  if opts.set_content then
+    opts.set_content(bufh, win)
   end
 
   if opts.set_buf_settings then
