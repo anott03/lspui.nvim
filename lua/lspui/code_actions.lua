@@ -4,11 +4,7 @@ local win = require('lspui.utils.window')
 
 local M = {}
 local function create_select_current_action(results)
-  return function()
-    local line = vim.api.nvim_get_current_line()
-    local index = tonumber(line:sub(1, 1))
-    api.nvim_buf_delete(0, { force = true })
-    local val = results[index]
+  local function perform_action(val)
     if val.edit or type(val.command) == "table" then
       if val.edit then
         vim.lsp.util.apply_workspace_edit(val.edit)
@@ -19,6 +15,14 @@ local function create_select_current_action(results)
     else
       vim.lsp.buf.execute_command(val)
     end
+  end
+
+  return function()
+    local line = vim.api.nvim_get_current_line()
+    local index = tonumber(line:sub(1, 1))
+    api.nvim_buf_delete(0, { force = true })
+    local val = results[index]
+    pcall(perform_action, val)
   end
 end
 
