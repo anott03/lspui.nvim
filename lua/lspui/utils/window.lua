@@ -3,26 +3,33 @@ local api = vim.api
 
 local M = {}
 
+local default_win_opts = {
+  relative = "cursor",
+  row = 1,
+  col = 0,
+  width = 40,
+  height = 2,
+  style = "minimal",
+  focusable = true,
+  border = {
+    {"╭", "LspuiBorder"},
+    {"─", "LspuiBorder"},
+    {"╮", "LspuiBorder"},
+    {"│", "LspuiBorder"},
+    {"╯", "LspuiBorder"},
+    {"─", "LspuiBorder"},
+    {"╰", "LspuiBorder"},
+    {"│", "LspuiBorder"}
+  },
+}
+
 M.create_win = function(opts)
+  local win_opts = vim.tbl_deep_extend("keep", opts, default_win_opts)
+  win_opts.set_content = nil
+  win_opts.set_buf_settings = nil
+  win_opts.text = nil
+
   local bufh = opts.bufh or api.nvim_create_buf(false, true)
-  local win_opts = opts.win_opts or {
-    relative = opts.relative or "cursor",
-    row = opts.row or 1,
-    col = opts.row or 0,
-    width = opts.width or 40,
-    height = opts.height or 2,
-    style = opts.style or "minimal",
-    border = {
-      {"╭", "LspuiBorder"},
-      {"─", "LspuiBorder"},
-      {"╮", "LspuiBorder"},
-      {"│", "LspuiBorder"},
-      {"╯", "LspuiBorder"},
-      {"─", "LspuiBorder"},
-      {"╰", "LspuiBorder"},
-      {"│", "LspuiBorder"}
-    },
-  }
   local win = api.nvim_open_win(bufh, true, win_opts)
   vim.api.nvim_win_set_buf(win, bufh)
 
