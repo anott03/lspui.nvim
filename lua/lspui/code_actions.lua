@@ -2,8 +2,7 @@ local lsp = vim.lsp
 local api = vim.api
 local win = require('lspui.utils.window')
 
-local M = {}
-local function create_select_current_action(results)
+local M = {} local function create_select_current_action(results)
   local function perform_action(val)
     if val.edit or type(val.command) == "table" then
       if val.edit then
@@ -63,12 +62,10 @@ M.action_picker = function()
     if not _width then
       _width = #lines[i]
     end
-    if #lines[i] > _width and #lines[i] < 60 then
+    if #lines[i] > _width then
       _width = #lines[i]
     end
   end
-
-  if _width > 60 then _width = 60 end
 
   M.select_current_action = create_select_current_action(results)
 
