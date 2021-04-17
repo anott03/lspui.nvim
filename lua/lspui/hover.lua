@@ -57,7 +57,6 @@ M.hover_doc = function()
 end
 
 M.line_diagnostics = function()
-  local thing
   local lines = {
     "Diagnostics:"
   }
