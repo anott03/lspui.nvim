@@ -6,6 +6,7 @@ local M = {}
 
 M.hover_doc = function()
   local params = util.make_position_params()
+  local current_win = api.nvim_get_current_win()
   lsp.buf_request(0,'textDocument/hover', params, function(_, _, result)
     if not (result and result.contents) then
       return
@@ -45,6 +46,8 @@ M.hover_doc = function()
         api.nvim_buf_set_option(bufh, "filetype", ft)
       end
     })
+
+    api.nvim_set_current_win(current_win)
   end)
 end
 
