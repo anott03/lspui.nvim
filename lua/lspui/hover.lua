@@ -4,6 +4,8 @@ local api = vim.api
 local win = require('lspui.utils.window')
 local M = {}
 
+local hover_doc_win_id
+
 M.hover_doc = function()
   local params = util.make_position_params()
   local current_win = api.nvim_get_current_win()
@@ -34,7 +36,7 @@ M.hover_doc = function()
       if #k > _width then _width = #k end
     end
 
-    win.create_win({
+    hover_doc_win_id, _ = win.create_win({
       text = markdown_lines,
       height = #markdown_lines,
       width = _width,
@@ -49,6 +51,10 @@ M.hover_doc = function()
 
     api.nvim_set_current_win(current_win)
   end)
+end
+
+M.close_hover_doc = function()
+  api.nvim_win_close(hover_doc_win_id, true)
 end
 
 return M
