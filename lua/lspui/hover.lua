@@ -4,7 +4,9 @@ local api = vim.api
 local win = require('lspui.utils.window')
 local M = {}
 
-local hover_doc_win_id
+local function close_hover_win(win_id)
+  lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden","BufLeave", "InsertCharPre"}, win_id)
+end
 
 M.hover_doc = function()
   local params = util.make_position_params()
@@ -36,7 +38,7 @@ M.hover_doc = function()
       if #k > _width then _width = #k end
     end
 
-    hover_doc_win_id, _ = win.create_win({
+    local hover_doc_win_id, _ = win.create_win({
       text = markdown_lines,
       height = #markdown_lines,
       width = _width,
@@ -50,11 +52,38 @@ M.hover_doc = function()
     })
 
     api.nvim_set_current_win(current_win)
+    close_hover_win(hover_doc_win_id)
   end)
 end
 
-M.close_hover_doc = function()
-  api.nvim_win_close(hover_doc_win_id, true)
+M.line_diagnostics = function()
+  local thing
+  local lines = {
+    "Diagnostics:"
+  }
+
+  local current_win = api.nvim_get_current_win()
+  local line_diagnostics = lsp.diagnostic.get_line_diagnostics()
+
+  local _width = 40
+  for i, k in pairs(line_diagnostics) do
+    if #k.message > _width then _width = #k.message end
+    table.insert(lines, i .. '. ' .. k.message)
+  end
+
+  local diagnostics_win_id = win.create_win({
+    width = _width,
+    height = #lines,
+    text = lines,
+
+    set_buf_settings = function(bufh, win_id)
+      api.nvim_win_set_option(win_id, 'winhl', 'Normal:LspuiNormal')
+      api.nvim_buf_add_highlight(bufh, -1, "LspuiTitle", 0, 0, -1)
+    end
+  })
+
+  api.nvim_set_current_win(current_win)
+  close_hover_win(diagnostics_win_id)
 end
 
 return M

@@ -7,3 +7,4 @@ endif
 
 highlight default link LspuiNormal Normal
 highlight default LspuiBorder guifg=lightblue
+highlight default LspuiTitle guifg=orange
