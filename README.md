@@ -1,5 +1,7 @@
 # LspUI.nvim
-A fairly simply frontend for neovim's builtin lsp to do things like code actions and token renaming. This project is largely inspired by [lspsaga](https://github.com/glepnir/lspsaga.nvim), and is very much a WIP.
+A fairly simply frontend for neovim's builtin lsp to do things like code actions and token renaming. Please note that this project is very much a WIP, and things will likely break or change.
+
+This project is largely inspired by [lspsaga](https://github.com/glepnir/lspsaga.nvim).
 
 ## Installation
 #### Vim-Plug
