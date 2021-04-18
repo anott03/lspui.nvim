@@ -19,12 +19,27 @@ local default_win_opts = {
     {"╯", "LspuiBorder"},
     {"─", "LspuiBorder"},
     {"╰", "LspuiBorder"},
-    {"│", "LspuiBorder"}
+    {"│", "LspuiBorder"},
   },
 }
 
-M.create_win = function(opts)
+local function setup_opts(opts)
   local win_opts = vim.tbl_deep_extend("keep", opts, default_win_opts)
+
+  local win_width = api.nvim_win_get_width(0)
+  local win_height = api.nvim_win_get_height(0)
+
+  local popup_position = api.nvim_win_get_cursor(0)
+  popup_position[1] = popup_position[1] + win_opts.row
+  popup_position[2] = popup_position[2] + win_opts.col
+
+  print(popup_position[1], popup_position[2])
+
+  return win_opts
+end
+
+M.create_win = function(opts)
+  local win_opts = setup_opts(opts)
   win_opts.set_content = nil
   win_opts.set_buf_settings = nil
   win_opts.text = nil
