@@ -72,6 +72,8 @@ M.action_picker = function()
 
   create_select_current_action(results)
 
+  table.insert(lines, 1, "Code Actions:")
+
   win.create_win({
     text = lines,
     set_buf_settings = function(bufh, win_id)
@@ -83,6 +85,7 @@ M.action_picker = function()
       api.nvim_feedkeys("l", "n", {})
 
       api.nvim_win_set_option(win_id, 'winhl', 'Normal:LspuiNormal')
+      api.nvim_buf_add_highlight(bufh, -1, "LspuiTitle", 0, 0, -1)
       vim.cmd([[set wrap]])
     end,
     height = #lines,
