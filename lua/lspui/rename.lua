@@ -36,7 +36,6 @@ end
 M.rename_the_token = function(bufh)
   local new_name = vim.trim(api.nvim_get_current_line():sub(#"Rename to >"+1, -1))
   print(new_name)
-  -- print("THING")
 
   local params = util.make_position_params()
   params.newName = new_name
