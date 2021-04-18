@@ -6,7 +6,7 @@ This project is largely inspired by [lspsaga](https://github.com/glepnir/lspsaga
 ## Installation
 #### Vim-Plug
 ```viml
-Plug 'nvim-lua/plenary.nvim' # required for lspui to work
+Plug 'nvim-lua/plenary.nvim' " required for lspui to work
 Plug 'anott03/lspui.nvim', { 'branch': 'main' }
 ```
 #### Packer.nvim
