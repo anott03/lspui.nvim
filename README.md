@@ -15,3 +15,22 @@ use {
   requires = {'nvim-lua/plenary.nvim'},
 }
 ```
+
+## Usage
+Currently all functionality must be called with lua.
+#### Code Actions
+```lua
+require('lspui.code_actions').action_picker()
+```
+As a keybinding it might look something like this:
+```vim
+<nnoremap> <leader>a lua require('lspui.code_actions').action_picker()<CR>
+```
+#### Line Diagnostics
+```lua
+require('lspui.hover').line_diagnostics()
+```
+#### Hover Docs
+```lua
+require('lspui.hover').hover_doc()
+```
