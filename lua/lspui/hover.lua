@@ -64,6 +64,8 @@ M.line_diagnostics = function()
   local current_win = api.nvim_get_current_win()
   local line_diagnostics = lsp.diagnostic.get_line_diagnostics()
 
+  if vim.tbl_isempty(line_diagnostics) then return end
+
   local _width = 40
   for i, k in pairs(line_diagnostics) do
     if #k.message > _width then _width = #k.message end
